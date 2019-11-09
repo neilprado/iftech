@@ -21,13 +21,13 @@ public class MovieService {
     public Movie cadastrarFilme(MovieRequest request){
         Movie movie = new Movie();
 
-        if(this.movieRepository.findByTitulo(request.getTitulo())){
-            throw new BadRequestAlertException(ProblemKey.FILME_JA_CADASTRADO);
-        }
+//        if(this.movieRepository.findByTitulo(request.getTitulo())){
+//            throw new BadRequestAlertException(ProblemKey.FILME_JA_CADASTRADO);
+//        }
 
-        if(this.movieRepository.findByGenero(request.getGenero())){
-            throw new BadRequestAlertException(ProblemKey.GENERO_NAO_ENCONTRADO);
-        }
+//        if(this.movieRepository.findByGenero(request.getGenero())){
+//            throw new BadRequestAlertException(ProblemKey.GENERO_NAO_ENCONTRADO);
+//        }
 
         movie.setGenero(request.getGenero());
         movie.setQuantidade(request.getQuantidade());
@@ -41,13 +41,13 @@ public class MovieService {
         Movie movie = this.movieRepository.findById(id).orElseThrow(
                 () -> new NotFoundAlertExcepcion(ProblemKey.FILME_NAO_ENCONTRADO));
 
-        if(this.movieRepository.findByTitulo(request.getTitulo())){
-            throw new BadRequestAlertException(ProblemKey.FILME_JA_CADASTRADO);
-        }
-
-        if(this.movieRepository.findByGenero(request.getGenero())){
-            throw new BadRequestAlertException(ProblemKey.GENERO_NAO_ENCONTRADO);
-        }
+//        if(this.movieRepository.findByTitulo(request.getTitulo())){
+//            throw new BadRequestAlertException(ProblemKey.FILME_JA_CADASTRADO);
+//        }
+//
+//        if(this.movieRepository.findByGenero(request.getGenero())){
+//            throw new BadRequestAlertException(ProblemKey.GENERO_NAO_ENCONTRADO);
+//        }
 
         movie.setGenero(request.getGenero());
         movie.setQuantidade(request.getQuantidade());

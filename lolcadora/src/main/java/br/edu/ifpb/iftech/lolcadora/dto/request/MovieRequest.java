@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 
 @Data
 public class MovieRequest {
-    private Long id;
     private String titulo;
     private int quantidade;
     private BigDecimal valor;

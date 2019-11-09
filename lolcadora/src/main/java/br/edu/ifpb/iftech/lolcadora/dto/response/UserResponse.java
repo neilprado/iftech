@@ -4,7 +4,7 @@ import br.edu.ifpb.iftech.lolcadora.model.User;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class UserResponse {
@@ -12,7 +12,7 @@ public class UserResponse {
     private String senha;
     private String nome;
     private String endereco;
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
 
     public static UserResponse from(User user){
         UserResponse response = new UserResponse();

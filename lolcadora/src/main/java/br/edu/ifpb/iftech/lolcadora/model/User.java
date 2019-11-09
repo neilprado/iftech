@@ -1,12 +1,16 @@
 package br.edu.ifpb.iftech.lolcadora.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Table(name = "tb_usuario")
 @Entity
@@ -26,6 +30,8 @@ public class User {
     @Column(name = "endereco", nullable = false)
     private String endereco;
 
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     @Column(name = "dtNascimento", nullable = false)
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
 }
