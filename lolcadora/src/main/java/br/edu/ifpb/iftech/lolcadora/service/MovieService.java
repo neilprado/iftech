@@ -1,14 +1,14 @@
 package br.edu.ifpb.iftech.lolcadora.service;
 
 import br.edu.ifpb.iftech.lolcadora.dto.request.MovieRequest;
-import br.edu.ifpb.iftech.lolcadora.exceptions.BadRequestAlertException;
-import br.edu.ifpb.iftech.lolcadora.exceptions.NotFoundAlertExcepcion;
-import br.edu.ifpb.iftech.lolcadora.exceptions.ProblemKey;
+import br.edu.ifpb.iftech.lolcadora.exceptions.ObjectNotFoundException;
 import br.edu.ifpb.iftech.lolcadora.model.Movie;
 import br.edu.ifpb.iftech.lolcadora.repository.MovieRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class MovieService {
@@ -19,15 +19,8 @@ public class MovieService {
     }
 
     public Movie cadastrarFilme(MovieRequest request){
+
         Movie movie = new Movie();
-
-//        if(this.movieRepository.findByTitulo(request.getTitulo())){
-//            throw new BadRequestAlertException(ProblemKey.FILME_JA_CADASTRADO);
-//        }
-
-//        if(this.movieRepository.findByGenero(request.getGenero())){
-//            throw new BadRequestAlertException(ProblemKey.GENERO_NAO_ENCONTRADO);
-//        }
 
         movie.setGenero(request.getGenero());
         movie.setQuantidade(request.getQuantidade());
@@ -39,15 +32,8 @@ public class MovieService {
 
     public Movie atualizarFilme(Long id, MovieRequest request){
         Movie movie = this.movieRepository.findById(id).orElseThrow(
-                () -> new NotFoundAlertExcepcion(ProblemKey.FILME_NAO_ENCONTRADO));
+                () -> new ObjectNotFoundException("Filme " + request.getTitulo() + " não encontrado"));
 
-//        if(this.movieRepository.findByTitulo(request.getTitulo())){
-//            throw new BadRequestAlertException(ProblemKey.FILME_JA_CADASTRADO);
-//        }
-//
-//        if(this.movieRepository.findByGenero(request.getGenero())){
-//            throw new BadRequestAlertException(ProblemKey.GENERO_NAO_ENCONTRADO);
-//        }
 
         movie.setGenero(request.getGenero());
         movie.setQuantidade(request.getQuantidade());
@@ -63,13 +49,13 @@ public class MovieService {
 
     public Movie buscarFilme(Long id){
         Movie movie = this.movieRepository.findById(id).orElseThrow(
-                () -> new NotFoundAlertExcepcion(ProblemKey.FILME_NAO_ENCONTRADO));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Filme não encontrado"));
         return movie;
     }
 
     public void removerFilme(Long id){
         Movie movie = this.movieRepository.findById(id).orElseThrow(
-                () -> new NotFoundAlertExcepcion(ProblemKey.FILME_NAO_ENCONTRADO));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Filme não encontrado"));
         this.movieRepository.delete(movie);
     }
 }

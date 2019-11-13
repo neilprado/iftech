@@ -4,6 +4,6 @@ import br.edu.ifpb.iftech.lolcadora.model.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-    boolean findByTitulo(String titulo);
-    boolean findByGenero(String genero);
+    Movie findOneByTitulo(String titulo);
+    Movie findOneByGenero(String genero);
 }

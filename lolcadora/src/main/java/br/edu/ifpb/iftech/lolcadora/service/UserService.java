@@ -1,14 +1,13 @@
 package br.edu.ifpb.iftech.lolcadora.service;
 
 import br.edu.ifpb.iftech.lolcadora.dto.request.UserRequest;
-import br.edu.ifpb.iftech.lolcadora.exceptions.BadRequestAlertException;
-import br.edu.ifpb.iftech.lolcadora.exceptions.NotFoundAlertExcepcion;
-import br.edu.ifpb.iftech.lolcadora.exceptions.ProblemKey;
 import br.edu.ifpb.iftech.lolcadora.model.User;
 import br.edu.ifpb.iftech.lolcadora.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserService {
@@ -21,10 +20,6 @@ public class UserService {
     public User cadastrarUsuario(UserRequest request){
         User user = new User();
 
-        if(this.userRepository.existsById(request.getLogin())){
-            throw new BadRequestAlertException(ProblemKey.LOGIN_EXISTENTE);
-        }
-
         user.setDataNascimento(request.getDataNascimento());
         user.setEndereco(request.getEndereco());
         user.setLogin(request.getLogin());
@@ -36,7 +31,7 @@ public class UserService {
 
     public User atualizarUsuario(String login, UserRequest request){
         User user = this.userRepository.findById(login).orElseThrow(
-                () -> new NotFoundAlertExcepcion(ProblemKey.USUARIO_NAO_ENCONTRADO));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 
         user.setSenha(request.getSenha());
         user.setNome(request.getNome());
@@ -53,13 +48,13 @@ public class UserService {
 
     public User buscarUsuario(String login){
         User user = this.userRepository.findById(login).orElseThrow(
-                () -> new NotFoundAlertExcepcion(ProblemKey.USUARIO_NAO_ENCONTRADO));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
         return user;
     }
 
     public void removerUsuario(String login){
         User user = this.userRepository.findById(login).orElseThrow(
-                () -> new NotFoundAlertExcepcion(ProblemKey.USUARIO_NAO_ENCONTRADO));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
         this.userRepository.delete(user);
     }
 }
