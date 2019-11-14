@@ -7,19 +7,21 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Data
 @Table(name = "tb_locacao")
-public class Rent {
+public class Rent implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Embedded
     @JsonIgnore
+    @Id
     private RentPK id = new RentPK();
 
     @Column(name = "data_locacao")

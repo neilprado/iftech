@@ -1,6 +1,7 @@
 package br.edu.ifpb.iftech.lolcadora.service;
 
 import br.edu.ifpb.iftech.lolcadora.dto.request.MovieRequest;
+import br.edu.ifpb.iftech.lolcadora.exceptions.DataIntegrityException;
 import br.edu.ifpb.iftech.lolcadora.exceptions.ObjectNotFoundException;
 import br.edu.ifpb.iftech.lolcadora.model.Movie;
 import br.edu.ifpb.iftech.lolcadora.repository.MovieRepository;
@@ -20,6 +21,10 @@ public class MovieService {
 
     public Movie cadastrarFilme(MovieRequest request){
 
+        if(this.movieRepository.findOneByTitulo(request.getTitulo()) == null){
+            throw new DataIntegrityException("Título já cadastrado");
+        }
+
         Movie movie = new Movie();
 
         movie.setGenero(request.getGenero());
@@ -32,7 +37,7 @@ public class MovieService {
 
     public Movie atualizarFilme(Long id, MovieRequest request){
         Movie movie = this.movieRepository.findById(id).orElseThrow(
-                () -> new ObjectNotFoundException("Filme " + request.getTitulo() + " não encontrado"));
+                () -> new ObjectNotFoundException("Filme não encontrado"));
 
 
         movie.setGenero(request.getGenero());
@@ -49,13 +54,14 @@ public class MovieService {
 
     public Movie buscarFilme(Long id){
         Movie movie = this.movieRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Filme não encontrado"));
+                () -> new ObjectNotFoundException("Filme não encontrado"));
+
         return movie;
     }
 
     public void removerFilme(Long id){
         Movie movie = this.movieRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Filme não encontrado"));
+                () -> new ObjectNotFoundException("Filme não encontrado"));
         this.movieRepository.delete(movie);
     }
 }

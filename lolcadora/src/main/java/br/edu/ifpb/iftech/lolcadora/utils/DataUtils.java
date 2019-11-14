@@ -1,31 +1,35 @@
 package br.edu.ifpb.iftech.lolcadora.utils;
 
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 
 public class DataUtils {
 
-    public static Date adicionarDias(Date data, int dias){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(data);
-        calendar.add(Calendar.DAY_OF_MONTH, dias);
-        return calendar.getTime();
+    public static LocalDate adicionarDias(LocalDate data, int dias){
+        LocalDate calendario = LocalDate.of(data.getYear(), data.getMonth(), data.getDayOfMonth());
+        calendario.plusDays(dias);
+        return calendario;
+    }
+    public static boolean isMaiorIdade(LocalDate dataNascimento){
+        LocalDate dataAtual = LocalDate.now();
+        Period anos = Period.between(dataNascimento, dataAtual);
+        return anos.getYears() >= 18;
     }
 
-    public static Date obterDataFutura(int dias){
-        return adicionarDias(new Date(), dias);
+    public static LocalDate obterDataFutura(int dias){
+        return adicionarDias(LocalDate.now(), dias);
     }
 
-    public static boolean isMesmaData(Date dataInicio, Date dataFim){
-        Calendar inicio = Calendar.getInstance();
-        inicio.setTime(dataInicio);
+    public static boolean isMesmaData(LocalDate dataInicio, LocalDate dataFim){
+        Period datas = Period.between(dataFim, dataInicio);
 
-        Calendar fim = Calendar.getInstance();
-        fim.setTime(dataFim);
-
-        return (inicio.get(Calendar.DAY_OF_MONTH) == fim.get(Calendar.DAY_OF_MONTH))
-                && inicio.get(Calendar.MONTH) == fim.get(Calendar.MONTH)
-                && inicio.get(Calendar.YEAR) == fim.get(Calendar.YEAR);
+        return datas.getDays() == 0;
     }
 
     public static boolean isMesmoDia(Date data, int diaSemana){
