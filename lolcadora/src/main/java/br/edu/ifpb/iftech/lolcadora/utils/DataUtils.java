@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,6 +36,12 @@ public class DataUtils {
     public static boolean isMesmoDia(Date data, int diaSemana){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(data);
+        return calendar.get(Calendar.DAY_OF_WEEK) == diaSemana;
+    }
+
+    public static boolean verificarDia(LocalDate data, int diaSemana){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Date.from(data.atStartOfDay(ZoneId.systemDefault()).toInstant()));
         return calendar.get(Calendar.DAY_OF_WEEK) == diaSemana;
     }
 }

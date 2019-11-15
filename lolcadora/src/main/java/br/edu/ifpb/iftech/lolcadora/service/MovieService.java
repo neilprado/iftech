@@ -3,6 +3,7 @@ package br.edu.ifpb.iftech.lolcadora.service;
 import br.edu.ifpb.iftech.lolcadora.dto.request.MovieRequest;
 import br.edu.ifpb.iftech.lolcadora.exceptions.DataIntegrityException;
 import br.edu.ifpb.iftech.lolcadora.exceptions.ObjectNotFoundException;
+import br.edu.ifpb.iftech.lolcadora.exceptions.OutOfStockException;
 import br.edu.ifpb.iftech.lolcadora.model.Movie;
 import br.edu.ifpb.iftech.lolcadora.repository.MovieRepository;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ public class MovieService {
 
     public Movie cadastrarFilme(MovieRequest request){
 
-        if(this.movieRepository.findOneByTitulo(request.getTitulo()) == null){
+        if(this.movieRepository.findOneByTitulo(request.getTitulo()) != null){
             throw new DataIntegrityException("Título já cadastrado");
         }
 
@@ -63,5 +64,11 @@ public class MovieService {
         Movie movie = this.movieRepository.findById(id).orElseThrow(
                 () -> new ObjectNotFoundException("Filme não encontrado"));
         this.movieRepository.delete(movie);
+    }
+
+    public void temEstoque(int quantidade){
+        if(quantidade == 0){
+            throw new OutOfStockException("Não temos cópias disponíveis para este filme");
+        }
     }
 }

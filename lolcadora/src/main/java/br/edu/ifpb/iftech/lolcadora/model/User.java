@@ -34,4 +34,6 @@ public class User {
     @JsonSerialize(using = LocalDateSerializer.class)
     @Column(name = "dtNascimento", nullable = false)
     private LocalDate dataNascimento;
+
+    private boolean isNegativado = false;
 }

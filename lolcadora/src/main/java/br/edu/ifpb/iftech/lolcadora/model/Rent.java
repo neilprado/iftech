@@ -19,9 +19,8 @@ public class Rent implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Embedded
     @JsonIgnore
-    @Id
+    @EmbeddedId
     private RentPK id = new RentPK();
 
     @Column(name = "data_locacao")
@@ -34,4 +33,6 @@ public class Rent implements Serializable {
     @JsonSerialize(using = LocalDateSerializer.class)
     @Column(name = "valor_locacao")
     private BigDecimal valor;
+
+    private boolean isPago = false;
 }

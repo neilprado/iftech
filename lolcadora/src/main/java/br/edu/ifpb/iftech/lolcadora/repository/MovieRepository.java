@@ -5,5 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     Movie findOneByTitulo(String titulo);
-    Movie findOneByGenero(String genero);
 }

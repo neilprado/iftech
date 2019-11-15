@@ -1,7 +1,11 @@
 package br.edu.ifpb.iftech.lolcadora.service;
 
 import br.edu.ifpb.iftech.lolcadora.dto.request.UserRequest;
+import br.edu.ifpb.iftech.lolcadora.exceptions.IsNegativedException;
+import br.edu.ifpb.iftech.lolcadora.model.Movie;
+import br.edu.ifpb.iftech.lolcadora.model.Rent;
 import br.edu.ifpb.iftech.lolcadora.model.User;
+import br.edu.ifpb.iftech.lolcadora.repository.MovieRepository;
 import br.edu.ifpb.iftech.lolcadora.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,9 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
+
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -56,5 +63,12 @@ public class UserService {
         User user = this.userRepository.findById(login).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
         this.userRepository.delete(user);
+    }
+
+    public void isNegativado(String login){
+        User user = buscarUsuario(login);
+        if(user.isNegativado()){
+            throw new IsNegativedException("Usuário tem um débito pendente");
+        }
     }
 }
