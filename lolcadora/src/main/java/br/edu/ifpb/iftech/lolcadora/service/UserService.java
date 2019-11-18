@@ -2,18 +2,13 @@ package br.edu.ifpb.iftech.lolcadora.service;
 
 import br.edu.ifpb.iftech.lolcadora.dto.request.UserRequest;
 import br.edu.ifpb.iftech.lolcadora.exceptions.IsNegativedException;
-import br.edu.ifpb.iftech.lolcadora.model.Movie;
-import br.edu.ifpb.iftech.lolcadora.model.Rent;
 import br.edu.ifpb.iftech.lolcadora.model.User;
-import br.edu.ifpb.iftech.lolcadora.repository.MovieRepository;
 import br.edu.ifpb.iftech.lolcadora.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @Service
 public class UserService {

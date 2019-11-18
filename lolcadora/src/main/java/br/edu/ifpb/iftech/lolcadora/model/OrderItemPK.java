@@ -9,15 +9,13 @@ import java.io.Serializable;
 
 @Embeddable
 @Data
-public class RentPK implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class OrderItemPK implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
+    @JoinColumn(name = "pedido_id")
+    private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "user_login")
-    private User user;
+    @JoinColumn(name = "produto_id")
+    private Product product;
 }
