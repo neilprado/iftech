@@ -22,6 +22,6 @@ public class Order {
     @JoinColumn(name = "usuario_id")
     private User user;
 
-    @OneToMany(mappedBy = "id.pedido")
+    @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> itens = new HashSet<>();
 }
