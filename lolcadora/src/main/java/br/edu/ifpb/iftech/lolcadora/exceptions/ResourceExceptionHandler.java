@@ -32,7 +32,7 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(IsNegativedException.class)
     public ResponseEntity<StandardError> isNegatived(IsNegativedException e, HttpServletRequest request){
-        StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Há um débito pendente", e.getMessage(), request.getRequestURI());
+        StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Não pode haver produtos com preço negativo", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 

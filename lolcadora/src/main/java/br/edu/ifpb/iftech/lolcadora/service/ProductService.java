@@ -24,11 +24,11 @@ public class ProductService {
         Product product = new Product();
 
         product.setNome(request.getNome());
-//        if(request.getPreco().compareTo(new BigDecimal("0")) <= 0){
-//            throw new IsNegativedException("Valor abaixo do permitido");
-//        }else{
+        if(request.getPreco().compareTo(new BigDecimal("0")) <= 0){
+            throw new IsNegativedException("Valor abaixo do permitido");
+        }else{
             product.setPreco(request.getPreco());
- //       }
+        }
         return this.repository.save(product);
     }
 
