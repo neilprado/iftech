@@ -4,6 +4,7 @@ import br.edu.ifpb.iftech.lolcadora.dto.request.OrderRequest;
 import br.edu.ifpb.iftech.lolcadora.exceptions.ObjectNotFoundException;
 import br.edu.ifpb.iftech.lolcadora.model.Order;
 import br.edu.ifpb.iftech.lolcadora.model.OrderItem;
+import br.edu.ifpb.iftech.lolcadora.model.Product;
 import br.edu.ifpb.iftech.lolcadora.repository.OrderItemRepository;
 import br.edu.ifpb.iftech.lolcadora.repository.OrderRepository;
 import org.springframework.data.domain.Page;
@@ -33,9 +34,9 @@ public class OrderService {
         order.setUser(userService.buscarUsuario(order.getUser().getLogin()));
 
         for (OrderItem item : order.getItens()){
-            item.getId().setProduct(productService.buscarProduto(item.getId().getProduct().getId()));
+            item.getId().setProduct(productService.buscarProduto(item.getProduct().getId()));
             item.getId().setOrder(order);
-            item.setPreco(item.getId().getProduct().getPreco());
+            item.setPreco(item.getProduct().getPreco());
         }
         orderItemRepository.saveAll(order.getItens());
         return orderRepository.save(order);

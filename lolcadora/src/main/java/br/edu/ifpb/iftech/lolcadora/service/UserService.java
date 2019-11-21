@@ -60,10 +60,10 @@ public class UserService {
         this.userRepository.delete(user);
     }
 
-    public void isNegativado(String login){
-        User user = buscarUsuario(login);
-        if(user.isNegativado()){
-            throw new IsNegativedException("Usuário tem um débito pendente");
-        }
-    }
+//    public void isNegativado(String login){
+//        User user = buscarUsuario(login);
+//        if(user.isNegativado()){
+//            throw new IsNegativedException("Usuário tem um débito pendente");
+//        }
+//    }
 }

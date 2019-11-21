@@ -3,9 +3,10 @@ package br.edu.ifpb.iftech.lolcadora.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,7 +24,22 @@ public class Order {
     private User user;
 
     @OneToMany(mappedBy = "id.order")
-    private Set<OrderItem> itens = new HashSet<>();
+    private List<OrderItem> itens = new ArrayList<>();
 
 
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Order other = (Order) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
 }

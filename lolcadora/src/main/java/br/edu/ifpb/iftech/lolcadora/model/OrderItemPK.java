@@ -11,6 +11,8 @@ import java.io.Serializable;
 @Data
 public class OrderItemPK implements Serializable {
 
+    private static final Long serialVersionUID = 1L;
+
     @ManyToOne
     @JoinColumn(name = "pedido_id")
     private Order order;
